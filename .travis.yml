@@ -1,0 +1,15 @@
+sudo: required
+services:
+  - docker
+
+before install:
+  - docker build -t devkaush/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true devkaush/react-test npm test
+
+after-success:
+  - docker build -t devkaush/multi-client ./client
+  - docker build -t devkaush/multi-nginx ./nginx
+  - docker build -t devkaush/multi-server ./server
+  - docker build -t devkaush/multi-worker ./worker
