@@ -11,7 +11,7 @@ script:
 after-success:
   - docker build -t devkaush/multi-client ./client
   - docker build -t devkaush/multi-nginx ./nginx
-  - docker build -t devkaush/multi-server ./server
+  - docker build -t devkaush/multi-server ./ server
   - docker build -t devkaush/multi-worker ./worker
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
@@ -20,3 +20,15 @@ after-success:
   - docker push devkaush/multi-nginx
   - docker push devkaush/multi-server
   - docker push devkaush/multi-worker
+
+deploy:
+  provider: elasticbeanstalk
+  region: 'ap-southeast-2'
+  app: 'multi-docker'
+  env: 'Multi-docker-env'
+  bucket_name: 'elasticbeanstalk-ap-southeast-2-623549006166'
+  bucket_path: 'docker-multi'
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
