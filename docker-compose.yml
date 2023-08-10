@@ -1,11 +1,11 @@
 version: "3"
 services:
   client:
-    image: "devkaush/multi-client-10-14"
+    image: "devkaush/multi-client"
     mem_limit: 128m
     hostname: client
   server:
-    image: "devkaush/multi-server-10-14"
+    image: "devkaush/multi-server"
     mem_limit: 128m
     hostname: api
     environment:
@@ -17,14 +17,14 @@ services:
       - PGPASSWORD=$PGPASSWORD
       - PGPORT=$PGPORT
   worker:
-    image: "devkaush/multi-worker-10-14"
+    image: "devkaush/multi-worker"
     mem_limit: 128m
     hostname: worker
     environment:
       - REDIS_HOST=$REDIS_HOST
       - REDIS_PORT=$REDIS_PORT
   nginx:
-    image: "devkaush/multi-nginx-10-14"
+    image: "devkaush/multi-nginx"
     mem_limit: 128m
     hostname: nginx
     ports:
